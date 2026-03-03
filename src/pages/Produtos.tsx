@@ -103,10 +103,10 @@ export default function Produtos() {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={chartData} margin={{ left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-              <XAxis dataKey="tipo" tick={{ fill: '#a1a1aa', fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={100} />
-              <YAxis allowDecimals={false} stroke="#71717a" />
+            <BarChart data={chartData} layout="vertical" margin={{ right: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#27272a" horizontal={false} />
+              <XAxis type="number" allowDecimals={false} stroke="#71717a" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
+              <YAxis type="category" dataKey="tipo" width={180} tick={{ fill: '#a1a1aa', fontSize: 11 }} />
               <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }} />
               <Legend />
               {estadosProduto.map(e => (
