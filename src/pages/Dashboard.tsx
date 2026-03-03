@@ -191,7 +191,7 @@ export default function Dashboard() {
                 <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={projetosPorPilar} margin={{ left: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="pilar" tick={{ fill: '#a1a1aa', fontSize: 10 }} interval={0} angle={-15} textAnchor="end" height={80} />
+                    <XAxis dataKey="pilar" tick={{ fill: '#a1a1aa', fontSize: 11 }} interval={0} tickFormatter={(v: string) => v.split(':')[0]} />
                     <YAxis allowDecimals={false} stroke="#71717a" />
                     <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }} />
                     <Legend />
