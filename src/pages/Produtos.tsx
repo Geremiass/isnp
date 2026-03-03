@@ -5,15 +5,20 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Select } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { tiposProduto, estadosProduto, estadosProdutoColors } from '@/data/constants'
-import { formatDate, exportCSV } from '@/lib/utils'
+import { formatDate, exportCSV, generateId } from '@/lib/utils'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RTooltip, Legend, ResponsiveContainer } from 'recharts'
-import { Search, Download } from 'lucide-react'
+import { Search, Download, Plus } from 'lucide-react'
+import type { Produto } from '@/data/types'
 
 export default function Produtos() {
-  const { produtos, projetos } = useApp()
+  const { produtos, projetos, addProduto, showToast } = useApp()
   const [search, setSearch] = useState('')
   const [filterEstado, setFilterEstado] = useState<string | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [form, setForm] = useState({ idProjeto: '', tipo: '', nome: '', dataEntrega: '', estado: 'Planeado' })
 
   const produtosEnriquecidos = useMemo(() =>
     produtos.map(p => ({
@@ -57,6 +62,23 @@ export default function Produtos() {
     return { byType, byEstado }
   }, [produtos])
 
+  function handleAddProduto() {
+    if (!form.idProjeto || !form.tipo) return
+    const id = generateId('P', produtos.map(p => p.id))
+    const newProduto: Produto = {
+      id,
+      idProjeto: form.idProjeto,
+      tipo: form.tipo,
+      nome: form.nome || null,
+      dataEntrega: form.dataEntrega || null,
+      estado: form.estado,
+    }
+    addProduto(newProduto)
+    showToast('Produto adicionado')
+    setForm({ idProjeto: '', tipo: '', nome: '', dataEntrega: '', estado: 'Planeado' })
+    setDialogOpen(false)
+  }
+
   function handleExportCSV() {
     const headers = ['ID Projeto', 'Nome Projeto', 'Tipo de Produto', 'Nome do Produto', 'Data de Entrega', 'Estado']
     const rows = filtered.map(p => [
@@ -72,7 +94,39 @@ export default function Produtos() {
         <Button variant="outline" onClick={handleExportCSV}>
           <Download className="h-4 w-4" /> Exportar CSV
         </Button>
+        <Button onClick={() => setDialogOpen(true)}>
+          <Plus className="h-4 w-4" /> Novo Produto
+        </Button>
       </PageHeader>
+
+      {/* Dialog Novo Produto */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Novo Produto / Output</DialogTitle>
+            <DialogDescription>Associe o produto a um projeto existente.</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-3">
+            <Select value={form.idProjeto} onChange={e => setForm(f => ({ ...f, idProjeto: e.target.value }))}>
+              <option value="">Selecionar projeto...</option>
+              {projetos.map(p => <option key={p.id} value={p.id}>{p.id} — {p.nome}</option>)}
+            </Select>
+            <Select value={form.tipo} onChange={e => setForm(f => ({ ...f, tipo: e.target.value }))}>
+              <option value="">Tipo de produto...</option>
+              {tiposProduto.map(t => <option key={t} value={t}>{t}</option>)}
+            </Select>
+            <Input value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} placeholder="Nome do produto (opcional)" />
+            <Input type="date" value={form.dataEntrega} onChange={e => setForm(f => ({ ...f, dataEntrega: e.target.value }))} />
+            <Select value={form.estado} onChange={e => setForm(f => ({ ...f, estado: e.target.value }))}>
+              {estadosProduto.map(s => <option key={s} value={s}>{s}</option>)}
+            </Select>
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
+            <Button onClick={handleAddProduto} disabled={!form.idProjeto || !form.tipo}>Adicionar</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Counters */}
       <div className="flex flex-wrap gap-2 mb-6">
