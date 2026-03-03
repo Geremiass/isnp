@@ -71,6 +71,7 @@ export function ProjetoFormModal({ open, onOpenChange, projeto }: Props) {
     if (!form.duracao) e.duracao = 'Obrigatório'
     if (!form.inicio) e.inicio = 'Obrigatório'
     if (!form.termino) e.termino = 'Obrigatório'
+    if (form.inicio && form.termino && form.termino < form.inicio) e.termino = 'Deve ser após a data de início'
     if (!form.fonteFinanciamento) e.fonteFinanciamento = 'Obrigatório'
     if (form.orcamento < 0) e.orcamento = 'Deve ser positivo'
     setErrors(e)
@@ -218,7 +219,7 @@ export function ProjetoFormModal({ open, onOpenChange, projeto }: Props) {
               </div>
               <div>
                 <label className="text-sm font-medium">Data de Término *</label>
-                <Input type="date" className={fieldClass('termino')} value={form.termino} onChange={e => setField('termino', e.target.value)} />
+                <Input type="date" className={fieldClass('termino')} value={form.termino} min={form.inicio || undefined} onChange={e => setField('termino', e.target.value)} />
                 {errors.termino && <p className="text-xs text-red-400 mt-1">{errors.termino}</p>}
               </div>
             </div>
