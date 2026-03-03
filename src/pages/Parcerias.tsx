@@ -78,7 +78,7 @@ export default function Parcerias() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                     <XAxis type="number" allowDecimals={false} stroke="#71717a" />
                     <YAxis dataKey="name" type="category" width={180} tick={{ fill: '#a1a1aa', fontSize: 11 }} />
-                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }} />
+                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} />
                     <Bar dataKey="projetos" fill="#3b82f6" radius={[0, 4, 4, 0]} name="Projetos" />
                   </BarChart>
                 </ResponsiveContainer>
@@ -98,7 +98,7 @@ export default function Parcerias() {
                     <YAxis yAxisId="left" allowDecimals={false} stroke="#71717a" />
                     <YAxis yAxisId="right" orientation="right" stroke="#71717a" tickFormatter={(v: number) => formatCurrencyShort(v)} />
                     <RTooltip
-                      contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }}
+                      contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }}
                       formatter={(value: number | undefined, name: string | undefined) =>
                         name === 'orcamento' ? formatCurrency(value ?? 0) : (value ?? 0)
                       }

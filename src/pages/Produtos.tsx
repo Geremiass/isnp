@@ -161,7 +161,7 @@ export default function Produtos() {
               <CartesianGrid strokeDasharray="3 3" stroke="#27272a" horizontal={false} />
               <XAxis type="number" allowDecimals={false} stroke="#71717a" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
               <YAxis type="category" dataKey="tipo" width={180} tick={{ fill: '#a1a1aa', fontSize: 11 }} />
-              <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }} />
+              <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} />
               <Legend />
               {estadosProduto.map(e => (
                 <Bar key={e} dataKey={e} stackId="a" fill={estadosProdutoColors[e]} name={e} />
