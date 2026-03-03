@@ -124,7 +124,7 @@ export default function Pipeline() {
 
     let targetEstado: EstadoFisico | null = null
 
-    if (estadosFisicos.includes(over.id as string)) {
+    if ((estadosFisicos as readonly string[]).includes(over.id as string)) {
       targetEstado = over.id as EstadoFisico
     } else {
       const targetProjeto = visibleProjetos.find(p => p.id === over.id)

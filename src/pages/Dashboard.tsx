@@ -251,7 +251,7 @@ export default function Dashboard() {
                       outerRadius={100}
                       paddingAngle={3}
                       dataKey="value"
-                      label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                      label={({ name, percent }: { name?: string; percent?: number }) => `${name ?? ''} (${((percent ?? 0) * 100).toFixed(0)}%)`}
                     >
                       {orcamentoPorFonte.map((_, i) => (
                         <Cell key={i} fill={COLORS_PIE[i % COLORS_PIE.length]} />
@@ -259,7 +259,7 @@ export default function Dashboard() {
                     </Pie>
                     <RTooltip
                       contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }}
-                      formatter={(value: number) => formatCurrency(value)}
+                      formatter={(value: number | undefined) => formatCurrency(value ?? 0)}
                     />
                   </PieChart>
                 </ResponsiveContainer>

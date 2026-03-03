@@ -99,8 +99,8 @@ export default function Parcerias() {
                     <YAxis yAxisId="right" orientation="right" stroke="#71717a" tickFormatter={(v: number) => formatCurrencyShort(v)} />
                     <RTooltip
                       contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8 }}
-                      formatter={(value: number, name: string) =>
-                        name === 'orcamento' ? formatCurrency(value) : value
+                      formatter={(value: number | undefined, name: string | undefined) =>
+                        name === 'orcamento' ? formatCurrency(value ?? 0) : (value ?? 0)
                       }
                     />
                     <Legend />

@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
 import { Select } from '@/components/ui/select'
 import { mockUsers } from '@/data/mock'
-import type { Utilizador } from '@/data/types'
 import { UserCircle } from 'lucide-react'
 
 export default function Profile() {
