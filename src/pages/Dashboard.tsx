@@ -171,7 +171,7 @@ export default function Dashboard() {
                 <CardTitle className="text-base">Projetos por Eixo da ANIS</CardTitle>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
+                <ResponsiveContainer width="100%" height={450}>
                   <BarChart data={projetosPorEixo} layout="vertical" margin={{ left: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                     <XAxis type="number" allowDecimals={false} stroke="#71717a" />
@@ -188,7 +188,7 @@ export default function Dashboard() {
                 <CardTitle className="text-base">Projetos por Pilar Estratégico INSP</CardTitle>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
+                <ResponsiveContainer width="100%" height={450}>
                   <BarChart data={projetosPorPilar} margin={{ left: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                     <XAxis dataKey="pilar" tick={{ fill: '#a1a1aa', fontSize: 11 }} interval={0} tickFormatter={(v: string) => v.split(':')[0]} />
@@ -241,14 +241,14 @@ export default function Dashboard() {
                 <CardTitle className="text-base">Orçamento por Fonte de Financiamento</CardTitle>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                   <PieChart>
                     <Pie
                       data={orcamentoPorFonte}
                       cx="50%"
                       cy="50%"
-                      innerRadius={60}
-                      outerRadius={100}
+                      innerRadius={80}
+                      outerRadius={130}
                       paddingAngle={3}
                       dataKey="value"
                       label={({ name, percent }: { name?: string; percent?: number }) => `${name ?? ''} (${((percent ?? 0) * 100).toFixed(0)}%)`}
