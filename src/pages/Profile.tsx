@@ -1,14 +1,15 @@
 import { useApp } from '@/data/store'
+import { useAuth } from '@/data/auth'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
-import { Select } from '@/components/ui/select'
-import { mockUsers } from '@/data/mock'
-import { UserCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { UserCircle, LogOut } from 'lucide-react'
 
 export default function Profile() {
-  const { currentUser, setCurrentUser, ui, setAnimacoes, setTabelaDensa } = useApp()
+  const { currentUser, ui, setAnimacoes, setTabelaDensa } = useApp()
+  const { signOut } = useAuth()
 
   return (
     <div>
@@ -40,6 +41,12 @@ export default function Profile() {
                 <p className="text-sm mt-1">{currentUser.departamento}</p>
               </div>
             </div>
+            <div className="pt-4 border-t border-border">
+              <Button variant="outline" onClick={signOut} className="w-full">
+                <LogOut className="h-4 w-4 mr-2" />
+                Terminar Sessão
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -63,24 +70,6 @@ export default function Profile() {
                 <p className="text-xs text-muted-foreground">Aumentar a densidade das tabelas</p>
               </div>
               <Switch checked={ui.tabelaDensa} onCheckedChange={setTabelaDensa} />
-            </div>
-
-            <div className="border-t border-border pt-4">
-              <p className="text-sm font-medium mb-2">Simular troca de papel (modo mock)</p>
-              <p className="text-xs text-muted-foreground mb-3">
-                Selecione um utilizador para simular as permissões do seu papel.
-              </p>
-              <Select
-                value={currentUser.id}
-                onChange={e => {
-                  const user = mockUsers.find(u => u.id === e.target.value)
-                  if (user) setCurrentUser(user)
-                }}
-              >
-                {mockUsers.map(u => (
-                  <option key={u.id} value={u.id}>{u.nome} — {u.papel}</option>
-                ))}
-              </Select>
             </div>
           </CardContent>
         </Card>

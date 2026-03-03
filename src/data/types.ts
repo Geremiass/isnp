@@ -8,6 +8,7 @@ export interface Utilizador {
 
 export interface Projeto {
   id: string
+  _dbId?: number
   nome: string
   departamento: string
   pilarINSP: string
@@ -31,13 +32,14 @@ export interface Projeto {
 export interface Produto {
   id: string
   idProjeto: string
+  _projetoDbId?: number
   tipo: string
   nome: string | null
   dataEntrega: string | null
   estado: string
 }
 
-export type Papel = 'admin' | 'investigador' | 'gestor'
+export type Papel = 'admin' | 'investigador' | 'gestor' | 'nenhum'
 export type EstadoFisico = 'Não_Iniciado' | 'Em_andamento' | 'Concluido' | 'Suspenso' | 'Cancelado'
 export type Periodo = 'ano_atual' | '2anos' | 'total'
 

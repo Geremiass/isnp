@@ -202,4 +202,4 @@ export const parceirosConhecidos = [
   "Banco Mundial", "CCS-SIDA", "Outros",
 ]
 
-export const papeis = ["admin", "investigador", "gestor"] as const
+export const papeis = ["admin", "investigador", "gestor", "nenhum"] as const
