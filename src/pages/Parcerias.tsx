@@ -92,9 +92,9 @@ export default function Parcerias() {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={350}>
-                  <BarChart data={financiadoresPorVolume} margin={{ left: 20 }}>
+                  <BarChart data={financiadoresPorVolume} margin={{ left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="name" tick={{ fill: '#a1a1aa', fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={80} />
+                    <XAxis dataKey="name" tick={{ fill: '#a1a1aa', fontSize: 12 }} interval={0} />
                     <YAxis yAxisId="left" allowDecimals={false} stroke="#71717a" />
                     <YAxis yAxisId="right" orientation="right" stroke="#71717a" tickFormatter={(v: number) => formatCurrencyShort(v)} />
                     <RTooltip
