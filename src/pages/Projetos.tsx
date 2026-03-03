@@ -138,15 +138,9 @@ export default function Projetos() {
                   <SortHeader label="ID" field="id" />
                   <SortHeader label="Nome" field="nome" />
                   <SortHeader label="Departamento" field="departamento" />
-                  <SortHeader label="Pilar INSP" field="pilarINSP" />
-                  <SortHeader label="Eixo ANIS" field="eixoANIS" />
-                  <SortHeader label="Investigador" field="investigadores" />
                   <SortHeader label="Estado" field="estadoFisico" />
-                  <SortHeader label="Exec. Fís." field="percExecFisica" />
-                  <SortHeader label="Exec. Fin." field="percExecFinanceira" />
+                  <SortHeader label="Exec. Física" field="percExecFisica" />
                   <SortHeader label="Orçamento" field="orcamento" />
-                  <SortHeader label="Início" field="inicio" />
-                  <SortHeader label="Término" field="termino" />
                   <th className="py-3 px-3 font-medium text-muted-foreground">Ações</th>
                 </tr>
               </thead>
@@ -154,25 +148,17 @@ export default function Projetos() {
                 {paged.map(p => (
                   <tr key={p.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                     <td className="py-2.5 px-3 font-mono text-xs">{p.id}</td>
-                    <td className="py-2.5 px-3 max-w-[200px] truncate">{p.nome}</td>
+                    <td className="py-2.5 px-3 max-w-[260px] truncate">{p.nome}</td>
                     <td className="py-2.5 px-3 text-xs">{p.departamento}</td>
-                    <td className="py-2.5 px-3 text-xs">{(pilaresINSPLabels[p.pilarINSP] || '').substring(0, 20)}</td>
-                    <td className="py-2.5 px-3 text-xs">{(eixosANISLabels[p.eixoANIS] || '').substring(0, 20)}</td>
-                    <td className="py-2.5 px-3 text-xs">{p.investigadores.join(', ')}</td>
                     <td className="py-2.5 px-3">
                       <Badge style={{ backgroundColor: estadosFisicosColors[p.estadoFisico] + '33', color: estadosFisicosColors[p.estadoFisico] }} className="text-[10px]">
                         {estadosFisicosLabels[p.estadoFisico]}
                       </Badge>
                     </td>
-                    <td className="py-2.5 px-3 w-28">
+                    <td className="py-2.5 px-3 w-32">
                       <Progress value={parsePercent(p.percExecFisica)} showLabel />
                     </td>
-                    <td className="py-2.5 px-3 w-28">
-                      <Progress value={parsePercent(p.percExecFinanceira)} showLabel />
-                    </td>
                     <td className="py-2.5 px-3 text-right text-xs whitespace-nowrap">{formatCurrency(p.orcamento)}</td>
-                    <td className="py-2.5 px-3 text-xs whitespace-nowrap">{formatDate(p.inicio)}</td>
-                    <td className="py-2.5 px-3 text-xs whitespace-nowrap">{formatDate(p.termino)}</td>
                     <td className="py-2.5 px-3">
                       <div className="flex gap-1">
                         <button onClick={() => setDetailProjeto(p)} className="p-1.5 rounded hover:bg-accent" aria-label="Ver detalhes"><Eye className="h-3.5 w-3.5" /></button>
