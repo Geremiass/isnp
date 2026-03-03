@@ -159,7 +159,7 @@ export default function Dashboard() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" horizontal={false} />
                     <XAxis type="number" allowDecimals={false} stroke="#71717a" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
                     <YAxis dataKey="name" type="category" width={200} tick={{ fill: '#a1a1aa', fontSize: 11 }} />
-                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} />
+                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} itemStyle={{ color: '#f4f4f5' }} />
                     <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} name="Projetos" />
                   </BarChart>
                 </ResponsiveContainer>
@@ -177,7 +177,7 @@ export default function Dashboard() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                     <XAxis dataKey="pilar" tick={{ fill: '#a1a1aa', fontSize: 11 }} interval={0} tickFormatter={(v: string) => v.split(':')[0]} />
                     <YAxis allowDecimals={false} stroke="#71717a" />
-                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} />
+                    <RTooltip contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }} itemStyle={{ color: '#f4f4f5' }} />
                     <Legend />
                     {estadoKeys.map((key, i) => (
                       <Bar key={key} dataKey={key} stackId="a" fill={Object.values(estadosFisicosColors)[i]} name={key} />
@@ -240,6 +240,7 @@ export default function Dashboard() {
                       </Pie>
                       <RTooltip
                         contentStyle={{ backgroundColor: '#0c0c10', border: '1px solid #27272a', borderRadius: 8, color: '#f4f4f5' }}
+                        itemStyle={{ color: '#f4f4f5' }}
                         formatter={(value: number | undefined) => formatCurrency(value ?? 0)}
                       />
                     </PieChart>
