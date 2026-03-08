@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from '@/data/auth'
 import { AppProvider } from '@/data/store'
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -53,10 +53,10 @@ function ProtectedApp() {
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AuthProvider>
         <ProtectedApp />
       </AuthProvider>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
