@@ -202,4 +202,61 @@ export const parceirosConhecidos = [
   "Banco Mundial", "CCS-SIDA", "Outros",
 ]
 
+// ─── Localidades de Cabo Verde ──────────────────────────
+export interface Localidade {
+  ilha: string
+  concelhos: string[]
+}
+
+export const localidadesCaboVerde: Localidade[] = [
+  {
+    ilha: "Santiago",
+    concelhos: [
+      "Praia", "Ribeira Grande de Santiago", "Santa Catarina", "Santa Cruz",
+      "São Domingos", "São Lourenço dos Órgãos", "São Salvador do Mundo",
+      "Tarrafal de Santiago", "São Miguel",
+    ],
+  },
+  {
+    ilha: "Santo Antão",
+    concelhos: ["Ribeira Grande", "Paul", "Porto Novo"],
+  },
+  {
+    ilha: "São Vicente",
+    concelhos: ["São Vicente (Mindelo)"],
+  },
+  {
+    ilha: "Sal",
+    concelhos: ["Sal"],
+  },
+  {
+    ilha: "Boa Vista",
+    concelhos: ["Boa Vista"],
+  },
+  {
+    ilha: "Maio",
+    concelhos: ["Maio"],
+  },
+  {
+    ilha: "São Nicolau",
+    concelhos: ["Ribeira Brava", "Tarrafal de São Nicolau"],
+  },
+  {
+    ilha: "Fogo",
+    concelhos: ["São Filipe", "Mosteiros", "Santa Catarina do Fogo"],
+  },
+  {
+    ilha: "Brava",
+    concelhos: ["Brava"],
+  },
+]
+
+// Flat list for quick lookups: "Ilha — Concelho"
+export const todasLocalidades: string[] = [
+  "Nacional",
+  ...localidadesCaboVerde.flatMap(l =>
+    l.concelhos.map(c => `${l.ilha} — ${c}`)
+  ),
+]
+
 export const papeis = ["admin", "investigador", "gestor", "nenhum"] as const

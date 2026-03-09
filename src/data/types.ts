@@ -16,7 +16,7 @@ export interface Projeto {
   eixoANIS: string
   linhaANIS: string
   investigadores: string[]
-  localidade: string
+  localidades: string[]
   duracao: string
   inicio: string
   termino: string

@@ -17,7 +17,7 @@ function dbRowToProjeto(row: Record<string, unknown>): Projeto {
     eixoANIS: (row.eixo_anis as string) || '',
     linhaANIS: (row.linha_anis as string) || '',
     investigadores: row.investigadores ? (row.investigadores as string).split(',').map(s => s.trim()).filter(Boolean) : [],
-    localidade: (row.localidade as string) || '',
+    localidades: row.localidade ? (row.localidade as string).split(';;').map(s => s.trim()).filter(Boolean) : [],
     duracao: (row.duracao as string) || '',
     inicio: (row.inicio as string) || '',
     termino: (row.termino as string) || '',
@@ -41,7 +41,7 @@ function projetoToDbRow(p: Omit<Projeto, 'id' | '_dbId'>, responsavelId: number)
     linha_anis: p.linhaANIS,
     investigadores: p.investigadores.join(', '),
     responsavel_id: responsavelId,
-    localidade: p.localidade || null,
+    localidade: p.localidades.length > 0 ? p.localidades.join(';;') : null,
     duracao: p.duracao || null,
     inicio: p.inicio || null,
     termino: p.termino || null,
@@ -273,7 +273,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (data.eixoANIS !== undefined) updates.eixo_anis = data.eixoANIS
     if (data.linhaANIS !== undefined) updates.linha_anis = data.linhaANIS
     if (data.investigadores !== undefined) updates.investigadores = data.investigadores.join(', ')
-    if (data.localidade !== undefined) updates.localidade = data.localidade
+    if (data.localidades !== undefined) updates.localidade = data.localidades.length > 0 ? data.localidades.join(';;') : null
     if (data.duracao !== undefined) updates.duracao = data.duracao
     if (data.inicio !== undefined) updates.inicio = data.inicio || null
     if (data.termino !== undefined) updates.termino = data.termino || null
