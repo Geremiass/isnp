@@ -19,6 +19,7 @@ export default function Produtos() {
   const [filterEstado, setFilterEstado] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [form, setForm] = useState({ idProjeto: '', tipo: '', nome: '', dataEntrega: '', estado: 'Planeado' })
+  const [formErrors, setFormErrors] = useState<string[]>([])
 
   const produtosEnriquecidos = useMemo(() =>
     produtos.map(p => ({
@@ -63,7 +64,14 @@ export default function Produtos() {
   }, [produtos])
 
   function handleAddProduto() {
-    if (!form.idProjeto || !form.tipo) return
+    const errors: string[] = []
+    if (!form.idProjeto) errors.push('Selecione um projeto')
+    if (!form.tipo) errors.push('Selecione o tipo de produto')
+    if (errors.length > 0) {
+      setFormErrors(errors)
+      return
+    }
+    setFormErrors([])
     const id = generateId('P', produtos.map(p => p.id))
     const newProduto: Produto = {
       id,
@@ -107,23 +115,32 @@ export default function Produtos() {
             <DialogDescription>Associe o produto a um projeto existente.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-3">
-            <Select value={form.idProjeto} onChange={e => setForm(f => ({ ...f, idProjeto: e.target.value }))}>
-              <option value="">Selecionar projeto...</option>
-              {projetos.map(p => <option key={p.id} value={p.id}>{p.id} — {p.nome}</option>)}
-            </Select>
-            <Select value={form.tipo} onChange={e => setForm(f => ({ ...f, tipo: e.target.value }))}>
-              <option value="">Tipo de produto...</option>
-              {tiposProduto.map(t => <option key={t} value={t}>{t}</option>)}
-            </Select>
+            <div>
+              <Select className={!form.idProjeto && formErrors.length > 0 ? 'border-red-500' : ''} value={form.idProjeto} onChange={e => { setForm(f => ({ ...f, idProjeto: e.target.value })); setFormErrors([]) }}>
+                <option value="">Selecionar projeto... *</option>
+                {projetos.map(p => <option key={p.id} value={p.id}>{p.id} — {p.nome}</option>)}
+              </Select>
+            </div>
+            <div>
+              <Select className={!form.tipo && formErrors.length > 0 ? 'border-red-500' : ''} value={form.tipo} onChange={e => { setForm(f => ({ ...f, tipo: e.target.value })); setFormErrors([]) }}>
+                <option value="">Tipo de produto... *</option>
+                {tiposProduto.map(t => <option key={t} value={t}>{t}</option>)}
+              </Select>
+            </div>
             <Input value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} placeholder="Nome do produto (opcional)" />
             <Input type="date" value={form.dataEntrega} onChange={e => setForm(f => ({ ...f, dataEntrega: e.target.value }))} />
             <Select value={form.estado} onChange={e => setForm(f => ({ ...f, estado: e.target.value }))}>
               {estadosProduto.map(s => <option key={s} value={s}>{s}</option>)}
             </Select>
           </div>
+          {formErrors.length > 0 && (
+            <div className="text-sm text-red-400 space-y-1">
+              {formErrors.map(e => <p key={e}>• {e}</p>)}
+            </div>
+          )}
           <div className="flex justify-end gap-2 pt-2">
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
-            <Button onClick={handleAddProduto} disabled={!form.idProjeto || !form.tipo}>Adicionar</Button>
+            <Button variant="outline" onClick={() => { setDialogOpen(false); setFormErrors([]) }}>Cancelar</Button>
+            <Button onClick={handleAddProduto}>Adicionar</Button>
           </div>
         </DialogContent>
       </Dialog>

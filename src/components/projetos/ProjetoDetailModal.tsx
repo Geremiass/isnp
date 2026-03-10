@@ -92,8 +92,16 @@ export function ProjetoDetailModal({ open, onOpenChange, projeto }: Props) {
                 <p className="text-sm">{projeto.departamento}</p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Localidade</p>
-                <p className="text-sm">{projeto.localidade}</p>
+                <p className="text-xs text-muted-foreground">Localidade(s)</p>
+                {projeto.localidades.length > 0 ? (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {projeto.localidades.map(l => (
+                      <span key={l} className="inline-flex items-center rounded-full bg-secondary px-2 py-0.5 text-xs">{l}</span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">—</p>
+                )}
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Pilar INSP</p>

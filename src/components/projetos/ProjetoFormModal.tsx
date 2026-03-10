@@ -11,6 +11,7 @@ import {
   eixosANIS, eixosANISLabels, linhasANISPorEixo,
   duracoes, fontesFinanciamento, parceirosConhecidos,
   estadosFisicos, estadosFisicosLabels, percExecFisicaOptions, percExecFinanceiraOptions,
+  localidadesCaboVerde,
 } from '@/data/constants'
 import { generateId } from '@/lib/utils'
 
@@ -23,7 +24,7 @@ interface Props {
 function emptyProjeto(): Omit<Projeto, 'id'> {
   return {
     nome: '', departamento: '', pilarINSP: '', linhaINSP: '', eixoANIS: '', linhaANIS: '',
-    investigadores: [], localidade: '', duracao: '', inicio: '', termino: '',
+    investigadores: [], localidades: [], duracao: '', inicio: '', termino: '',
     parceiros: [], orcamento: 0, fonteFinanciamento: '',
     estadoFisico: 'Não_Iniciado', percExecFisica: '0%', percExecFinanceira: '0% (Sem Verba Disponível)',
     observacoes: '',
@@ -127,19 +128,60 @@ export function ProjetoFormModal({ open, onOpenChange, projeto }: Props) {
               <Input className={fieldClass('nome')} value={form.nome} onChange={e => setField('nome', e.target.value)} />
               {errors.nome && <p className="text-xs text-red-400 mt-1">{errors.nome}</p>}
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm font-medium">Departamento *</label>
-                <Select className={fieldClass('departamento')} value={form.departamento} onChange={e => setField('departamento', e.target.value)}>
-                  <option value="">Selecionar...</option>
-                  {departamentos.map(d => <option key={d} value={d}>{d}</option>)}
-                </Select>
-                {errors.departamento && <p className="text-xs text-red-400 mt-1">{errors.departamento}</p>}
-              </div>
-              <div>
-                <label className="text-sm font-medium">Localidade</label>
-                <Input value={form.localidade} onChange={e => setField('localidade', e.target.value)} />
-              </div>
+            <div>
+              <label className="text-sm font-medium">Departamento *</label>
+              <Select className={fieldClass('departamento')} value={form.departamento} onChange={e => setField('departamento', e.target.value)}>
+                <option value="">Selecionar...</option>
+                {departamentos.map(d => <option key={d} value={d}>{d}</option>)}
+              </Select>
+              {errors.departamento && <p className="text-xs text-red-400 mt-1">{errors.departamento}</p>}
+            </div>
+            <div>
+                <label className="text-sm font-medium">Localidade(s)</label>
+                <div className="mt-1 max-h-48 overflow-y-auto border border-border rounded-lg p-2 space-y-2">
+                  {/* Nacional option */}
+                  <label className="flex items-center gap-2 text-sm cursor-pointer hover:bg-accent rounded px-2 py-1 font-medium">
+                    <input
+                      type="checkbox"
+                      checked={form.localidades.includes('Nacional')}
+                      onChange={e => {
+                        if (e.target.checked) setField('localidades', ['Nacional'])
+                        else setField('localidades', form.localidades.filter(l => l !== 'Nacional'))
+                      }}
+                      className="rounded"
+                    />
+                    Nacional (todo o país)
+                  </label>
+                  <hr className="border-border" />
+                  {localidadesCaboVerde.map(ilha => (
+                    <div key={ilha.ilha}>
+                      <p className="text-xs font-semibold text-muted-foreground px-2 pt-1">{ilha.ilha}</p>
+                      {ilha.concelhos.map(c => {
+                        const val = `${ilha.ilha} — ${c}`
+                        return (
+                          <label key={val} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-accent rounded px-2 py-0.5">
+                            <input
+                              type="checkbox"
+                              checked={form.localidades.includes(val)}
+                              disabled={form.localidades.includes('Nacional')}
+                              onChange={e => {
+                                if (e.target.checked) setField('localidades', [...form.localidades, val])
+                                else setField('localidades', form.localidades.filter(l => l !== val))
+                              }}
+                              className="rounded"
+                            />
+                            {c}
+                          </label>
+                        )
+                      })}
+                    </div>
+                  ))}
+                </div>
+                {form.localidades.length > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Selecionados: {form.localidades.join(', ')}
+                  </p>
+                )}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
